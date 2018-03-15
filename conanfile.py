@@ -14,7 +14,6 @@ class ImguiConan(ConanFile):
     exports_sources = "CMakeLists.txt"
 
     def source(self):
-        print(self.source_folder)
         if not os.path.exists(os.path.join(self.source_folder, "imgui")):
             self.run("git clone https://github.com/ocornut/imgui.git")
         self.run("cd imgui && git fetch --all --tags")
