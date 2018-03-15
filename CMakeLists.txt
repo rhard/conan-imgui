@@ -12,4 +12,4 @@ set(CMAKE_CXX_STANDARD 11)
 
 include_directories(imgui)
 
-add_library(imgui imgui/imgui.cpp)
+add_library(imgui imgui/imgui.cpp imgui/imgui_draw.cpp)

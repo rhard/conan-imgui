@@ -27,6 +27,7 @@ class ImguiConan(ConanFile):
 
     def package(self):
         self.copy("imgui.h", dst="include", src="imgui")
+        self.copy("imconfig.h", dst="include", src="imgui")
         self.copy("imgui_internal.h", dst="include", src="imgui")
         self.copy("imgui.lib", dst="lib", src="lib", keep_path=False)
 
