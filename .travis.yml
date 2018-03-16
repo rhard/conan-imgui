@@ -5,6 +5,7 @@ env:
      - CONAN_USERNAME: "rhard"
      - CONAN_LOGIN_USERNAME: "rhard"
      - CONAN_CHANNEL: "testing"
+     - CONAN_UPLOAD: "https://api.bintray.com/conan/rhard/conan"
      
 linux: &linux
    os: linux

@@ -9,6 +9,8 @@ environment:
     CONAN_USERNAME: "rhard"
     CONAN_LOGIN_USERNAME: "rhard"
     CONAN_CHANNEL: "testing"
+    CONAN_UPLOAD: "https://api.bintray.com/conan/rhard/conan"
+
     
     matrix:
         - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
