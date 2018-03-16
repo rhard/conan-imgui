@@ -15,6 +15,7 @@ class ImguiTestConan(ConanFile):
         self.copy("*.dll", dst="bin", src="bin")
         self.copy("*.dylib*", dst="bin", src="lib")
         self.copy('*.so*', dst='bin', src='lib')
+        self.copy('*.lib', dst='lib', src='lib')
 
     def test(self):
         with tools.environment_append(RunEnvironment(self).vars):
