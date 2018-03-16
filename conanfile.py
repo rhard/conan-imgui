@@ -4,20 +4,23 @@ import os
 class ImguiConan(ConanFile):
     name = "imgui"
     version = "1.53"
-    license = "https://github.com/ocornut/imgui/blob/master/LICENSE.txt"
+    license = "MIT"
     url = "https://github.com/rhard/conan-imgui"
     description = "Dear ImGui is a bloat-free graphical user interface library for C++."
     settings = "os", "compiler", "build_type", "arch"
+    sources_folder = "source_subfolder"
     options = {"shared": [True, False]}
     default_options = "shared=False"
     generators = "cmake"
     exports_sources = "CMakeLists.txt"
 
     def source(self):
-        if not os.path.exists(os.path.join(self.source_folder, "imgui")):
-            self.run("git clone https://github.com/ocornut/imgui.git")
-        self.run("cd imgui && git fetch --all --tags")
-        self.run("cd imgui && git checkout tags/v%s" % self.version)
+        zipname = 'v1.53.tar.gz'
+        url = 'https://github.com/ocornut/imgui/archive/%s' % zipname
+        tools.download(url, zipname)
+        tools.unzip(zipname)
+        os.unlink(zipname)
+        os.rename("imgui-1.53", self.sources_folder)
 
     def build(self):
         cmake = CMake(self)
@@ -25,10 +28,15 @@ class ImguiConan(ConanFile):
         cmake.build()
 
     def package(self):
-        self.copy("imgui.h", dst="include", src="imgui")
-        self.copy("imconfig.h", dst="include", src="imgui")
-        self.copy("imgui_internal.h", dst="include", src="imgui")
-        self.copy("imgui.lib", dst="lib", src="lib", keep_path=False)
+        self.copy(pattern="License*", dst="licenses", src=self.sources_folder, ignore_case=True, keep_path=False)
+        self.copy("imgui.h", dst="include", src=self.sources_folder)
+        self.copy("imconfig.h", dst="include", src=self.sources_folder)
+        self.copy("imgui_internal.h", dst="include", src=self.sources_folder)
+        self.copy("*.dll", dst="bin", keep_path=False)
+        self.copy("*.so", dst="lib", keep_path=False)
+        self.copy("*.dylib", dst="lib", keep_path=False)
+        self.copy("*.a", dst="lib", keep_path=False)
+        self.copy("imgui.lib", dst="lib", keep_path=False)
 
     def package_info(self):
         self.cpp_info.libs = ["imgui"]
